@@ -1,0 +1,5 @@
+config = {
+    'bot_name': '',
+    'bot_token': '',
+    'mongo_connect': ''
+}
