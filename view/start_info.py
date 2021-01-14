@@ -1,8 +1,9 @@
 """
     Данный модуль отвечает за функцию отвечающую на команду /start
 """
+from loguru import logger
 
-
+@logger.catch
 def start_info(db, bot, chat_id):
     Content = db.content
 

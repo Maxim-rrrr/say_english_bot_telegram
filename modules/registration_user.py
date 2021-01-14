@@ -1,5 +1,6 @@
+from loguru import logger
 
-
+@logger.catch
 def registration_user(User, message):
     if not User.find_one({'_id': message.chat.id}):
         try:
@@ -9,9 +10,9 @@ def registration_user(User, message):
                 'username': 'message.from_user.username',
                 'classes': []
             })
-            print('Успешное добавление пользователя в БД')
-            print(
+            logger.info('Успешное добавление пользователя в БД')
+            logger.info(
                 f'chat_id: {message.chat.id}, Имя: {message.from_user.first_name} {message.from_user.last_name},',
-                f' username: {message.from_user.username}\n')
+                f' username: {message.from_user.username}')
         except:
-            print('Ошибка сохранения пользователя в БД\n')
+            logger.error('Ошибка сохранения пользователя в БД')

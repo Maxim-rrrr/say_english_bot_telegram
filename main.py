@@ -1,14 +1,18 @@
 from pymongo import MongoClient
 import telebot
+from loguru import logger
 
 from configure import config
 from view.start_info import start_info
 from modules.init_database import init_database
 from modules.registration_user import registration_user
 
+# Настойки логера
+logger.add('logs/logs.log', format='{time} {level} {message}', level='DEBUG', rotation='1 MB', compression='zip')
+
 # Инициализация MongoDB
 mongo_client = MongoClient(config['mongo_connect'])
-print('База данных подключена.')
+logger.info('База данных подключена.')
 db = mongo_client.telegram_bot
 
 # Определение коллекций БД
@@ -17,11 +21,11 @@ Content = db.content
 
 # Инициализация стартовых записей в БД
 init_database(db)
-print('Проверка целостности БД завершина.\n')
+logger.info('Проверка целостности БД завершина.')
 
 # Инициализация Telegam bot
 bot = telebot.TeleBot(config['bot_token'])
-print('Прошли верификацию bot token.')
+logger.info('Прошли верификацию bot token.')
 
 
 # функция отвечающая на текстовые сообщения
