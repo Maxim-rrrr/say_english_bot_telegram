@@ -3,9 +3,10 @@
 """
 from loguru import logger
 
+
 @logger.catch
-def start_info(db, bot, chat_id):
+async def start_info(db, message):
     Content = db.content
 
     text = Content.find_one({'_id': 'start_info'})['text']
-    bot.send_message(chat_id, text)
+    await message.answer(text)

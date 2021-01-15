@@ -105,6 +105,7 @@ celerybeat.pid
 .env
 .venv
 env/
+venv/
 ENV/
 env.bak/
 venv.bak/
@@ -129,4 +130,7 @@ dmypy.json
 
 # config
 configure.py
+
+# logs
+logs/
 
