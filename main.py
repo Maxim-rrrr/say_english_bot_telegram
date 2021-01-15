@@ -3,13 +3,13 @@ from loguru import logger
 
 from controller.User import UserController
 from controller.Admin import AdminController
-from modules.db import connect_db
+from modules.db import check_db
 
 # Настойки логера
 logger.add('logs/logs.log', format='{time} {level} {message}', level='DEBUG', rotation='1 MB', compression='zip')
 
-# Инициализация MongoDB
-connect_db()
+# Проверка MongoDB
+check_db()
 
 # Регистрация контроллеров
 bot_dp = UserController()

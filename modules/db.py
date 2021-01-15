@@ -4,7 +4,7 @@ from loguru import logger
 from modules.init_database import init_database
 
 
-def connect_db():
+def check_db():
     global db
     # Инициализация MongoDB
     try:
