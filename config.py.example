@@ -7,6 +7,8 @@ config = {
     'bot_admin_name': '',
     'bot_admin_token': '',
 
+    'admin_password': '',
+
     # Url подключения к MongoDB
     'mongo_connect': ''
 }

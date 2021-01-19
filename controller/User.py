@@ -1,5 +1,4 @@
 from aiogram import Bot, Dispatcher, types
-from modules.registration_user import registration_user
 from loguru import logger
 from modules.db import registration_user, get_info
 from configure import config

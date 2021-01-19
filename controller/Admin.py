@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 from loguru import logger
-from modules.db import get_info, set_info
+from modules.db import get_info, set_info, is_admin, add_admin
 from configure import config
 
 
@@ -20,22 +20,26 @@ def AdminController():
         KeyboardButton('FAQ')
     )
 
-    edit_info = InlineKeyboardMarkup(resize_keyboard=True).add(
-        InlineKeyboardButton('Изменить информацию', callback_data='edit_info')
-    )
 
     @admin_dp.message_handler(commands=['start'])
     async def start_admin(message: types.Message):
-        await admin.send_message(message.from_user.id, 'Start', reply_markup=core_markup)
+        await admin.send_message(message.from_user.id, 'Введите пароль авторизации', reply_markup=core_markup)
 
     @admin_dp.message_handler()
     async def info(message: types.Message):
-        if message.text == 'Основная информация':
-            await message.answer(get_info() + '\n\nОтправьте сообщение начинающееся с "edit_info" и оно станет новой "Основной информацией"')
+        if is_admin(message):
+            if message.text == 'Основная информация':
+                await message.answer(get_info() + '\n\nОтправьте сообщение начинающееся с "edit_info" и оно станет новой "Основной информацией"')
 
-        if message.text.startswith('edit_info'):
-            if message.text[9:].strip():
-                set_info(message.text[9:].strip())
-                await message.answer('OK')
+            if message.text.startswith('edit_info'):
+                if message.text[9:].strip():
+                    set_info(message.text[9:].strip())
+                    await message.answer('OK') 
+
+        elif message.text == config['admin_password']:
+            add_admin(message)
+            await message.answer('Авторизация успешна')
+        else:
+            await message.answer('Введите пароль авторизации')
 
     return admin, admin_dp
