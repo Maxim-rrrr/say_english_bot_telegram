@@ -1,8 +1,7 @@
 from aiogram import Bot, Dispatcher, types
-from view.start_info import start_info
 from modules.registration_user import registration_user
 from loguru import logger
-from modules.db import db
+from modules.db import registration_user, get_info
 from configure import config
 
 
@@ -18,10 +17,10 @@ def UserController():
     # функция отвечающая на текстовые сообщения
     @bot_dp.message_handler()
     async def response_text(message: types.Message):
-        User = db.users
-        # Всех пользователей заносим в БД
-        registration_user(User, message)
-        if message.text == '/start':
-            await start_info(db, message)
 
-    return bot_dp
+        # Всех пользователей заносим в БД
+        registration_user(message)
+        if message.text == '/start':
+            await message.answer(get_info())
+
+    return bot, bot_dp
