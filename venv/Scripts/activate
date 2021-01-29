@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\User\PycharmProjects\say_english_bot\venv"
+VIRTUAL_ENV="C:\Users\User\Desktop\say_english_bot_telegram\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
