@@ -62,7 +62,7 @@ class DB(MongoClient):
 
     @logger.catch()
     def set_hello(self, content) -> str:
-        return hello.set(self.telegram_bot, content)
+        pass
 
     # О нас
     @logger.catch()
