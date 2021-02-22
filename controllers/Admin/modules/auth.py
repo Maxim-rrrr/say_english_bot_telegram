@@ -4,7 +4,7 @@ from configure import config
 from DataBase.main import database
 from controllers.Admin.modules.is_auth import is_auth
 from controllers.Admin.main import bot_dp
-from controllers.Admin.modules.core_markup import core_markup
+from controllers.Admin.modules.admin_markup import core_markup
 
 
 @bot_dp.message_handler(text=[config['admin_password']])

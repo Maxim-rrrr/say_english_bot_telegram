@@ -4,13 +4,12 @@ from aiogram.dispatcher import FSMContext
 from loguru import logger
 from pprint import pprint
 
-from controllers.Admin.main import bot_dp
+from controllers.bot import bot_dp
 from DataBase.main import database
-from controllers.Admin.modules.is_auth import is_auth
 from controllers.Admin.modules.standard_answer import standard_answer
 
-from controllers.Admin.modules.states import EditState
-from controllers.Admin.modules.core_markup import core_markup
+from States import State
+from controllers.Admin.modules.admin_markup import admin_markup
 
 options_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
@@ -27,16 +26,13 @@ edit_keyboard = ReplyKeyboardMarkup(resize_keyboard=True).add(
 )
 
 
-@bot_dp.message_handler(text='О нас')
+@bot_dp.message_handler(text='О нас', state=State.admin)
 async def about(message: types.Message):
-    if not await is_auth(message):
-        return
-
     await standard_answer(message, database.get_about())
     await message.answer('Опции секции "О нас"', reply_markup=options_keyboard)
 
 
-@bot_dp.callback_query_handler(text_contains='about')
+@bot_dp.callback_query_handler(text_contains='about', state=State.admin)
 async def callback(call: CallbackQuery):
     data = call.data.split(':')[1]
     try:
@@ -57,7 +53,7 @@ async def callback(call: CallbackQuery):
             logger.info(f'Изменение секции\tcallbackData:\t{call.data}')
             await call.message.answer('Успешно!')
         elif data == 'edit':
-            await EditState.edit_about.set()
+            await State.edit_about.set()
             await call.message.answer('Изменение секции "О нас"', reply_markup=edit_keyboard)
 
     except:
@@ -65,35 +61,34 @@ async def callback(call: CallbackQuery):
         await call.message.answer('Ошибка')
 
 
-@bot_dp.message_handler(text='Завершиить изменения', state=EditState.edit_about)
-async def s(message: types.Message, state: FSMContext):
-    await state.reset_state()
-    await message.answer('ОК', reply_markup=core_markup)
+@bot_dp.message_handler(text='Завершиить изменения', state=State.edit_about)
+async def s(message: types.Message):
+    await State.admin.set()
+    await message.answer('ОК', reply_markup=admin_markup)
 
 
-@bot_dp.message_handler(state=EditState.edit_about, content_types=['text'])
+@bot_dp.message_handler(state=State.edit_about, content_types=['text'])
 async def s(message: types.Message):
     logger.info('Изменение about text')
     database.set_about(option='text', content=message.text)
     await message.answer('ОК')
 
 
-@bot_dp.message_handler(state=EditState.edit_about, content_types=['photo'])
+@bot_dp.message_handler(state=State.edit_about, content_types=['photo'])
 async def s(message: types.Message):
     logger.info('Изменение about photo')
-    pprint(dict(message))
     database.set_about(option='photo', content=message.photo[-1].file_id)
-    await message.answer('ОК\n' + '\n\n'.join([file.file_id for file in message.photo]))
+    await message.answer('ОК')
 
 
-@bot_dp.message_handler(state=EditState.edit_about, content_types=['video'])
+@bot_dp.message_handler(state=State.edit_about, content_types=['video'])
 async def s(message: types.Message):
     logger.info('Изменение about video')
     database.set_about(option='video', content=message.video.file_id)
     await message.answer('ОК')
 
 
-@bot_dp.message_handler(state=EditState.edit_about, content_types=['document'])
+@bot_dp.message_handler(state=State.edit_about, content_types=['document'])
 async def s(message: types.Message):
     logger.info('Изменение about document')
     database.set_about(option='document', content=message.document.file_id)

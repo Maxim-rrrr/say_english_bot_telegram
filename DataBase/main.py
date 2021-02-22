@@ -2,9 +2,9 @@ from pymongo import MongoClient
 from loguru import logger
 
 from DataBase.migration import migration
-from configure import config
+from config import config
 
-from DataBase.modules import hello, about_us, admin, faq, user, timetable, teachers, prices
+from DataBase.modules import hello, about_us, faq, user, timetable, teachers, prices
 
 
 class DB(MongoClient):
@@ -20,7 +20,7 @@ class DB(MongoClient):
         logger.info('Проверка целостности БД завершина.')
 
     '''
-        Запись всех пользователей нужна для отправки уведоилений 
+        Запись всех пользователей нужна для отправки уведомлений 
         По большому счёту можно хранить только chat ID
     '''
     @logger.catch()
@@ -40,20 +40,6 @@ class DB(MongoClient):
                 )
             except:
                 logger.error('Ошибка сохранения пользователя в БД')
-
-    # Проверка на админа
-    @logger.catch()
-    def is_admin(self, message):
-        return self.telegram_bot.admins.find_one({'_id': message.chat.id})
-
-    # Авторизация админа
-    @logger.catch()
-    def add_admin(self, message):
-        self.telegram_bot.admins.insert_one({
-            '_id': message.chat.id,
-            'name': f'{message.from_user.first_name} {message.from_user.last_name}',
-            'username': f'{message.from_user.username}'
-        })
 
     # Приветствие
     @logger.catch()

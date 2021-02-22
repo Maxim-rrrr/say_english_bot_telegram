@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from aiogram.utils.callback_data import CallbackData
 
-from controllers.User.main import bot_dp
+from controllers.bot import bot_dp
 from DataBase.main import database
 
 age_callback = CallbackData('age', 'type_group')

@@ -1,14 +1,8 @@
 config = {
-    # Имя и токен чат-бота (Имя не обязательно)
     'bot_name': '',
     'bot_token': '',
 
-    # Имя и токен админского чат-бота (Имя не обязательно)
-    'bot_admin_name': '',
-    'bot_admin_token': '',
-
     'admin_password': '',
 
-    # Url подключения к MongoDB
     'mongo_connect': ''
 }

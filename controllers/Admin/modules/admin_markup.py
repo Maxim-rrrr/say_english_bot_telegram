@@ -1,6 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-core_markup = ReplyKeyboardMarkup(resize_keyboard=True).add(
+admin_markup = ReplyKeyboardMarkup(resize_keyboard=True).add(
     KeyboardButton('О нас')
 ).add(
     KeyboardButton('Преподаватели')

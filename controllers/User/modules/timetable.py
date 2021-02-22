@@ -1,6 +1,6 @@
 from aiogram import types
 
-from controllers.User.main import bot_dp
+from controllers.bot import bot_dp
 from DataBase.main import database
 from controllers.User.modules.standard_answer import standard_answer
 
