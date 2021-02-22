@@ -16,8 +16,7 @@ def migration(db):
                 'text': 'Приветствие',
                 'photo': '',
                 'video': '',
-                'document': '',
-                'voice': ''
+                'document': ''
             }
         })
 
@@ -28,8 +27,7 @@ def migration(db):
                 'text': 'О нас',
                 'photo': '',
                 'video': '',
-                'document': '',
-                'voice': ''
+                'document': ''
             }
         })
 
@@ -40,8 +38,7 @@ def migration(db):
                 'text': 'Преподаватели',
                 'photo': '',
                 'video': '',
-                'document': '',
-                'voice': ''
+                'document': ''
             }
         })
 
@@ -52,8 +49,7 @@ def migration(db):
                 'text': 'Цены',
                 'photo': '',
                 'video': '',
-                'document': '',
-                'voice': ''
+                'document': ''
             }
         })
 
@@ -64,8 +60,7 @@ def migration(db):
                 'text': 'Расписание',
                 'photo': '',
                 'video': '',
-                'document': '',
-                'voice': ''
+                'document': ''
             }
         })
 
@@ -79,8 +74,7 @@ def migration(db):
                         'text': 'Ответ 1',
                         'photo': '',
                         'video': '',
-                        'document': '',
-                        'voice': ''
+                        'document': ''
                     }
                 },
                 {
@@ -89,8 +83,7 @@ def migration(db):
                         'text': 'Ответ 2',
                         'photo': '',
                         'video': '',
-                        'document': '',
-                        'voice': ''
+                        'document': ''
                     }
                 }
             ]

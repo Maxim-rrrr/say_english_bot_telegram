@@ -70,8 +70,8 @@ class DB(MongoClient):
         return about_us.get(self.telegram_bot)
 
     @logger.catch()
-    def set_about(self, content) -> str:
-        pass
+    def set_about(self, option, content='') -> bool:
+        return about_us.set(self.telegram_bot, option, content)
 
     # Преподаватели
     @logger.catch()

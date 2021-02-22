@@ -26,6 +26,3 @@ async def standard_answer(
 
     if content['document']:
         await message.answer_document(content['document'], reply_markup=markup)
-
-    if content['voice']:
-        await message.answer_voice(content['voice'], reply_markup=markup)
