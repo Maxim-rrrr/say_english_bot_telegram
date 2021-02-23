@@ -3,8 +3,7 @@ from loguru import logger
 
 from DataBase.migration import migration
 from config import config
-
-from DataBase.modules import hello, about_us, faq, user, timetable, teachers, prices
+from aiogram import types
 
 
 class DB(MongoClient):
@@ -24,7 +23,7 @@ class DB(MongoClient):
         По большому счёту можно хранить только chat ID
     '''
     @logger.catch()
-    def registration_user(self, message) -> None:
+    def registration_user(self, message: types.Message) -> None:
         User = self.telegram_bot.users
         if not User.find_one({'_id': message.chat.id}):
             try:
@@ -41,50 +40,14 @@ class DB(MongoClient):
             except:
                 logger.error('Ошибка сохранения пользователя в БД')
 
-    # Приветствие
-    @logger.catch()
-    def get_hello(self) -> dict:
-        return hello.get(self.telegram_bot)
+    def get(self, name: str) -> dict:
+        return self.telegram_bot.content.find_one({'_id': name})['content']
 
-    @logger.catch()
-    def set_hello(self, content) -> str:
-        pass
+    def set(self, name: str, option: str, content: str = '') -> None:
+        database_content = self.telegram_bot.content.find_one({'_id': name})['content']
+        database_content[option] = content
 
-    # О нас
-    @logger.catch()
-    def get_about(self) -> dict:
-        return about_us.get(self.telegram_bot)
-
-    @logger.catch()
-    def set_about(self, option, content='') -> bool:
-        return about_us.set(self.telegram_bot, option, content)
-
-    # Преподаватели
-    @logger.catch()
-    def get_teachers(self) -> dict:
-        return teachers.get(self.telegram_bot)
-
-    @logger.catch()
-    def set_teachers(self, content) -> str:
-        pass
-
-    # Цены
-    @logger.catch()
-    def get_prices(self) -> dict:
-        return prices.get(self.telegram_bot)
-
-    @logger.catch()
-    def set_prices(self, content) -> str:
-        pass
-
-    # Расписание
-    @logger.catch()
-    def get_timetable(self) -> dict:
-        return timetable.get(self.telegram_bot)
-
-    @logger.catch()
-    def set_timetable(self, content) -> str:
-        pass
+        self.telegram_bot.content.update_one({'_id': name}, {'$set': {'content': database_content}})
 
     # Измениение возраста ребёнка
     @logger.catch()
@@ -92,6 +55,22 @@ class DB(MongoClient):
         self.telegram_bot.users.update_one({'_id': chat_id}, {'$set': {
             'age_group': value
         }})
+
+    # Миграция стандартной секции
+    @logger.catch()
+    def migrate_standard_section(self, name: str) -> None:
+        Content = database.telegram_bot.content
+
+        if not Content.find_one({'_id': name}):
+            Content.insert_one({
+                '_id': name,
+                'content': {
+                    'text': name,
+                    'photo': '',
+                    'video': '',
+                    'document': ''
+                }
+            })
 
 
 database = DB(config['mongo_connect'])

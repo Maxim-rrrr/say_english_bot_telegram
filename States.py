@@ -1,7 +1,13 @@
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
 
-class State(StatesGroup):
+class States(StatesGroup):
     admin = State()
 
-    edit_about = State()
+    about = State()
+    teachers = State()
+    prices = State()
+    timetable = State()
+    start = State()
+
+    faq_add = State()
