@@ -20,7 +20,7 @@ import controllers.User.childs_age
 
 import controllers.User.faq
 import controllers.Admin.faq
-
+import controllers.Admin.create_event
 
 # Авторизацию прокидываем прям тут, а дальше всё через state
 @bot_dp.message_handler(text=[config['admin_password']])

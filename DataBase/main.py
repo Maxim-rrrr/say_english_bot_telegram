@@ -72,5 +72,9 @@ class DB(MongoClient):
                 }
             })
 
+    def get_users(self) -> list:
+        User = self.telegram_bot.users
+        return list(User.find())
+
 
 database = DB(config['mongo_connect'])

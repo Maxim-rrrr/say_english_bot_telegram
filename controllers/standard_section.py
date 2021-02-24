@@ -8,7 +8,7 @@ import typing
 
 from DataBase.main import database
 from controllers.bot import bot_dp
-from controllers.User.standard_answer import standard_answer
+from controllers.standard_answer import standard_answer
 from controllers.Admin.admin_markup import admin_markup
 from States import States
 

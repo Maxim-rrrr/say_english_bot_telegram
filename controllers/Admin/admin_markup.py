@@ -11,9 +11,9 @@ for section in Standard_section:
 admin_markup.add(
     KeyboardButton('Часто задаваемые вопросы')
 ).add(
-    KeyboardButton('Статистика по подписчикам')
+    KeyboardButton('Статистика')
 ).add(
-    KeyboardButton('Создания уведомления')
+    KeyboardButton('Создать уведомление')
 ).add(
     KeyboardButton('Выйти из админки')
 )
