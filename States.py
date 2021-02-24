@@ -11,3 +11,4 @@ class States(StatesGroup):
     start = State()
 
     faq_add = State()
+    create_event = State()

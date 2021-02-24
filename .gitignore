@@ -134,3 +134,5 @@ config.py
 # logs
 logs/
 
+.idea/
+

@@ -5,7 +5,7 @@ from controllers.bot import bot_dp
 
 
 # Настойки логера
-logger.add('logs/user/logs.log', format='{time} {level} {message}', level='DEBUG', rotation='1 MB', compression='zip')
+logger.add('logs/logs.log', format='{time} {level} {message}', level='DEBUG', rotation='1 MB', compression='zip')
 
 import controllers.main
 

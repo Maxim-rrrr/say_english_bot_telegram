@@ -1,3 +1,4 @@
 pymongo~=3.11.2
+pymongo[srv]
 loguru~=0.5.3
 aiogram~=2.11.2
