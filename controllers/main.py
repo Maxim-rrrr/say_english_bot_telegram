@@ -20,7 +20,14 @@ import controllers.User.childs_age
 
 import controllers.User.faq
 import controllers.Admin.faq
+import controllers.Admin.events
 import controllers.Admin.create_event
+
+
+@bot_dp.message_handler(text='Назад', state=States.admin)
+async def back(message: types.Message):
+    await message.answer('OK', reply_markup=admin_markup)
+
 
 # Авторизацию прокидываем прям тут, а дальше всё через state
 @bot_dp.message_handler(text=[config['admin_password']])

@@ -13,7 +13,7 @@ admin_markup.add(
 ).add(
     KeyboardButton('Статистика')
 ).add(
-    KeyboardButton('Создать уведомление')
+    KeyboardButton('Уведомления')
 ).add(
     KeyboardButton('Выйти из админки')
 )

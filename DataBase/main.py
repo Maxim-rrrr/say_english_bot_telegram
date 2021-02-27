@@ -4,6 +4,7 @@ from loguru import logger
 from DataBase.migration import migration
 from config import config
 from aiogram import types
+from datetime import datetime
 
 
 class DB(MongoClient):
@@ -72,9 +73,48 @@ class DB(MongoClient):
                 }
             })
 
+    @logger.catch()
     def get_users(self) -> list:
         User = self.telegram_bot.users
         return list(User.find())
+
+    @logger.catch()
+    def add_event(self, content: dict, age_groups: list, reactions: dict) -> int:
+        Events = self.telegram_bot.events
+        id = len(list(Events.find())) + 1
+
+        self.telegram_bot.events.insert_one({
+            '_id': id,
+            'content': content,
+            'age_groups': age_groups,
+            'answers': reactions,
+            'user_answer': [],
+            'datetime': datetime.today()
+        })
+
+        return id
+
+    @logger.catch()
+    def answer_event(self, id: int, reaction: str, chat_id: str) -> None:
+        event = self.telegram_bot.events.find_one({'_id': id})
+        if chat_id not in event['user_answer']:
+            user_answer = event['user_answer']
+            user_answer.append(chat_id)
+
+            answers = event['answers']
+            answers[reaction] += 1
+            self.telegram_bot.events.update_one({'_id': id}, {'$set': {
+                'answers': answers,
+                'user_answer': user_answer
+            }})
+
+    @logger.catch()
+    def get_event(self, index: int = None):
+        events = list(self.telegram_bot.events.find())
+
+        if index is None:
+            return events
+        return events[index]
 
 
 database = DB(config['mongo_connect'])

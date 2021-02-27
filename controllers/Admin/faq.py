@@ -68,7 +68,7 @@ async def callback(call: CallbackQuery):
         )
 
         await States.faq_add.set()
-        await call.message.answer(f'Напишите сообщение в формате\n<Вопрос>\n\n<Ответ>', reply_markup=edit_keyboard)
+        await call.message.answer(f'Напишите сообщение в формате:\n<Вопрос>\n\n<Ответ>', reply_markup=edit_keyboard)
 
 
 @bot_dp.message_handler(text='Отмена', state=States.faq_add)
