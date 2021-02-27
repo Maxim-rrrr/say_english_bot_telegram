@@ -1,15 +1,9 @@
 from aiogram import types
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, InlineKeyboardMarkup, \
-    InlineKeyboardButton, CallbackQuery
-from aiogram.dispatcher import FSMContext
+from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
-from loguru import logger
-from pprint import pprint
-
-from controllers.bot import bot, bot_dp
+from controllers.bot import bot_dp
 from States import States
 from DataBase.main import database
-from controllers.Admin.admin_markup import admin_markup
 from controllers.standard_answer import standard_answer
 
 edit_keyboard = ReplyKeyboardMarkup(resize_keyboard=True).add(
@@ -83,3 +77,5 @@ async def events(message: types.Message):
         info += 'Реакций нет'
 
     await message.answer(info)
+
+import controllers.Admin.create_event

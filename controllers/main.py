@@ -21,7 +21,7 @@ import controllers.User.childs_age
 import controllers.User.faq
 import controllers.Admin.faq
 import controllers.Admin.events
-import controllers.Admin.create_event
+import controllers.Admin.statistics
 
 
 @bot_dp.message_handler(text='Назад', state=States.admin)
