@@ -59,21 +59,22 @@ def standard_section(
     @bot_dp.callback_query_handler(text_contains=name, state=States.admin)
     async def callback(call: CallbackQuery):
         data = call.data.split(':')[1]
+        print(call.data)
         try:
             if data == 'del_text':
-                database.set_about(option='text')
+                database.set(name, option='text')
                 logger.info(f'Изменение секции\tcallbackData:\t{call.data}')
                 await call.message.answer('Успешно!')
-            elif data == 'del_photo':
-                database.set_about(option='photo')
+            elif data == 'del_img':
+                database.set(name, option='photo')
                 logger.info(f'Изменение секции\tcallbackData:\t{call.data}')
                 await call.message.answer('Успешно!')
             elif data == 'del_video':
-                database.set_about(option='video')
+                database.set(name, option='video')
                 logger.info(f'Изменение секции\tcallbackData:\t{call.data}')
                 await call.message.answer('Успешно!')
-            elif data == 'del_document':
-                database.set_about(option='document')
+            elif data == 'del_doc':
+                database.set(name, option='document')
                 logger.info(f'Изменение секции\tcallbackData:\t{call.data}')
                 await call.message.answer('Успешно!')
             elif data == 'edit':
